@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:zarainia_utils/zarainia_utils.dart';
 
 /// A keymap widget allowing easy addition of shortcut keys to any widget tree
 /// with an optional help screen overlay
@@ -350,14 +351,14 @@ class KeyboardWidgetState extends State<KeyboardWidget> {
 
   Widget _getKeyboardListener(BuildContext context) {
     return Focus(
-      child: FocusTraversalGroup(child: widget.child),
+      child: FocusTraversalGroup(child: DefaultFocus(child: widget.child)),
       canRequestFocus: true,
       descendantsAreFocusable: true,
       skipTraversal: false,
       focusNode: _focusNode,
       autofocus: false, //widget.hasFocus,
       onKey: (FocusNode node, RawKeyEvent event) {
-        if (event.runtimeType == RawKeyDownEvent && node.hasPrimaryFocus) {
+        if (event.runtimeType == RawKeyDownEvent && node.hasFocus) {
           LogicalKeyboardKey key = event.logicalKey;
 
           if (key == widget.showDismissKey) {
